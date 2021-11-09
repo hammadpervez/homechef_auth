@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_chief/ui/home/home.dart';
 import 'package:home_chief/ui/signin/signin.dart';
+import 'package:home_chief/ui/widgets/auth_widget.dart';
 import 'package:home_chief/ui/signup/signup.dart';
 
 class Routes {

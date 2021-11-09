@@ -5,6 +5,9 @@ class AppStrings {
   static const signUp = "Sign Up";
   
 
+  //Exception Messages
+  
+
   //Fields Texts
   static const enterName = 'Enter Full Name';
   static const enterEmail = 'Enter Email';
