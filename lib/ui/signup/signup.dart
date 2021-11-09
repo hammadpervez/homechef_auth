@@ -15,6 +15,47 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: context.height,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(Images.logo, width: context.width * .8),
+                      Text(AppStrings.welcomeToHomeChef,
+                          style: Theme.of(context).textTheme.headline6),
+                    ],
+                  ),
+                ),
+                const Expanded(
+                  flex: 2,
+                  child: SignUpForm(),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SignUpForm extends StatefulWidget {
+  const SignUpForm({Key? key}) : super(key: key);
+
+  @override
+  State<SignUpForm> createState() => _SignUpFormState();
+}
+
+class _SignUpFormState extends State<SignUpForm> {
   late TextEditingController nameController,
       phoneController,
       emailController,
@@ -40,58 +81,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: context.height,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(Images.logo, width: context.width * .8),
-                      Text(AppStrings.welcomeToHomeChef),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Column(
-                    children: [
-                      CustomInputField(
-                        controller: nameController,
-                        hintText: AppStrings.enterName,
-                        keyboardType: TextInputType.name,
-                        formaters: [nameLengthFormat, nameFormat],
-                      ),
-                      CustomInputField(
-                        controller: phoneController,
-                        keyboardType: TextInputType.phone,
-                        hintText: AppStrings.enterPhoneNo,
-                        formaters: [phoneLengthFormat, phoneNoFormat],
-                      ),
-                      CustomInputField(
-                        controller: emailController,
-                        hintText: AppStrings.enterEmail,
-                        formaters: [emailFormat],
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      CustomInputField(
-                        controller: passwordController,
-                        hintText: AppStrings.enterPassword,
-                      ),
-                      WideCustomButton()
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+    return Column(
+      children: [
+        CustomInputField(
+          controller: nameController,
+          hintText: AppStrings.enterName,
+          keyboardType: TextInputType.name,
+          formaters: [nameLengthFormat, nameFormat],
         ),
-      ),
+        CustomInputField(
+          controller: phoneController,
+          keyboardType: TextInputType.phone,
+          hintText: AppStrings.enterPhoneNo,
+          formaters: [phoneLengthFormat, phoneNoFormat],
+        ),
+        CustomInputField(
+          controller: emailController,
+          hintText: AppStrings.enterEmail,
+          formaters: [emailFormat],
+          keyboardType: TextInputType.emailAddress,
+        ),
+        CustomInputField(
+          controller: passwordController,
+          hintText: AppStrings.enterPassword,
+        ),
+        WideCustomButton(title: AppStrings.signUp, onTap: () {})
+      ],
     );
   }
 }
@@ -99,8 +114,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 class WideCustomButton extends StatelessWidget {
   const WideCustomButton({
     Key? key,
+    required this.title,
+    this.onTap,
   }) : super(key: key);
-
+  final String title;
+  final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(

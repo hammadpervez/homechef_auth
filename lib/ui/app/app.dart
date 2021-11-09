@@ -14,7 +14,6 @@ class App extends StatelessWidget {
         colorScheme: _colorLightSchemeTheme(),
         elevatedButtonTheme: _elevatedButtonTheme(),
         inputDecorationTheme: _inputDecorationTheme(),
-        
       ),
       title: AppStrings.appTitle,
       onGenerateRoute: Routes.onGenerateRoute,
@@ -30,7 +29,11 @@ class App extends StatelessWidget {
   }
 
   TextTheme _textTheme() {
-    return const TextTheme(subtitle1: TextStyle(color: AppColors.primaryColor));
+    return const TextTheme(
+        subtitle1: TextStyle(color: AppColors.primaryColor),
+        headline6: TextStyle(
+          color: AppColors.secondaryColor,
+        ));
   }
 
   ElevatedButtonThemeData _elevatedButtonTheme() {
