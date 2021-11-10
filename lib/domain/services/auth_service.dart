@@ -8,6 +8,7 @@ enum AuthStatus {
   success,
   error,
 }
+enum AuthType { signup, signin }
 
 class AuthService extends ChangeNotifier {
   final AuthRepo _authRepo;
@@ -17,18 +18,25 @@ class AuthService extends ChangeNotifier {
 
   String? _error;
   AuthStatus _status = AuthStatus.loading;
+  AuthType _authType = AuthType.signup;
+
+  //GETTERS
+  String? get error => _error;
+  AuthType get authType => _authType;
   AuthStatus get status => _status;
 
-  String? get error => _error;
 
+///////////////////////////////////////////////////////////////
   Future<void> signIn(UserModel model) async {
-     _authenticate(() async {
+    _authType = AuthType.signin;
+    _authenticate(() async {
       await _authRepo.authenticateUser(model);
     });
   }
 
   Future<void> signUp(UserModel model) async {
-    _authenticate(() async {
+    _authType = AuthType.signup;
+    await _authenticate(() async {
       await _authRepo.createUser(model);
     });
   }

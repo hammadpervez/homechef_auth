@@ -37,6 +37,7 @@ class _SignUpFormScreenState extends ConsumerState<SignInScreen> {
   }
 
   _onSignIn() {
+    
     ref.read(authService).signIn(UserModel(
         phone: phoneController.text, password: passwordController.text));
   }

@@ -13,6 +13,7 @@ class AuthRepoImpl extends AuthRepo {
     try {
       await dio.post(AppUri.loginUri, data: _signInData);
     } on DioError catch (e) {
+      _hasServerErrorThrow(e.response?.statusCode);
       throw AuthError.fromJson(e.response?.data);
     }
   }
@@ -29,7 +30,16 @@ class AuthRepoImpl extends AuthRepo {
     try {
       await dio.post(AppUri.registerUri, data: _registerUserData);
     } on DioError catch (e) {
+      _hasServerErrorThrow(e.response?.statusCode);
+
       throw AuthError.fromJson(e.response?.data);
+    }
+  }
+
+  _hasServerErrorThrow(int? statusCode) {
+    if (statusCode != 400) {
+      throw const AuthModel.error(
+          'Something went wrong, Please check your connection!');
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:home_chief/config/routes.dart';
 
 import 'package:home_chief/domain/services/auth_service.dart';
 import 'package:home_chief/domain/services/pods/pods.dart';
@@ -19,7 +20,7 @@ class AuthScreen extends ConsumerWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: SizedBox(
-          height: context.height,
+          height: context.fixedHeight,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
@@ -34,11 +35,11 @@ class AuthScreen extends ConsumerWidget {
     );
   }
 
-  Column _buildAppImage(BuildContext context) {
+  Widget _buildAppImage(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(Images.logo, width: context.width * .8),
+        Image.asset(Images.logo, width: context.fixedHeight * .4),
         Text(AppStrings.welcomeToHomeChef,
             style: Theme.of(context).textTheme.headline6),
       ],
@@ -50,14 +51,21 @@ class AuthScreen extends ConsumerWidget {
       if (next.status == AuthStatus.loading) {
         _showLoader(context);
       } else if (next.status == AuthStatus.error) {
+        //popping off loader
         Navigator.pop(context);
         //Hiding any snackbar that overlapping
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(next.error!)));
       } else {
+        //popping off loader
         Navigator.pop(context);
-        Future.delayed(const Duration(milliseconds: 500), onSuccess);
+        if (next.authType == AuthType.signin) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, Routes.home, (route) => false);
+        } else {
+          Navigator.pushReplacementNamed(context, Routes.signin);
+        }
       }
     });
   }
