@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:home_chief/shared/app_strings.dart';
+
 
 class WideCustomButton extends StatelessWidget {
   const WideCustomButton({

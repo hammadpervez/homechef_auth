@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,6 +8,7 @@ class CustomInputField extends StatelessWidget {
   final IconData? prefixIcon;
   final List<TextInputFormatter>? formaters;
   final TextInputType? keyboardType;
+  final bool isPassword;
   const CustomInputField({
     Key? key,
     this.controller,
@@ -17,18 +17,20 @@ class CustomInputField extends StatelessWidget {
     this.formaters,
     this.prefixIcon,
     this.keyboardType,
+    this.isPassword = false,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: TextFormField(
+        obscureText: isPassword,
         controller: controller,
         validator: onValidate,
         inputFormatters: formaters,
         keyboardType: keyboardType,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(18, 12, 18, 12),
+          contentPadding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
           prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
           hintText: hintText,
         ),
